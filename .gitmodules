@@ -1,0 +1,3 @@
+[submodule "jsi"]
+	path = jsi
+	url = https://github.com/NeilFraser/JS-Interpreter.git

@@ -1,4 +1,5 @@
 
+
 let cmOptions = {
     theme: "material",
     lineNumbers: true,
@@ -6,9 +7,47 @@ let cmOptions = {
     tabSize: 4,
 }
 
-var textArea = document.getElementById("editor");
-console.log("script has been loaded", textArea)
-var code = new CodeMirror.fromTextArea(textArea, cmOptions);
+let sampleCode = `
+2 * 3
+`
 
-code.setValue("console.log('yo');")
+class JsExec {
+    run () {
+        console.log('run')
+        this.jsi = new Interpreter(sampleCode);
+        this.jsi.run()
+    }
+    stop () {
+        console.log('stop')
+    }
+    step () {
+        console.log('step')
+    }
+}
+
+const jse = new JsExec()
+
+function conectUI() {
+    var p = document.getElementById("runButton");
+    p.onclick = jse.run;       
+    var p = document.getElementById("stopButton");
+    p.onclick = jse.stop;       
+    var p = document.getElementById("stepButton");
+    p.onclick = jse.step;       
+}
+
+function spinUp() {
+    var textArea = document.getElementById("editor");
+    console.log("script has been loaded", textArea)
+    jse.code = new CodeMirror.fromTextArea(textArea, cmOptions);
+    
+    jse.code.setValue(sampleCode)
+}
+
+
+spinUp()
+conectUI()
+
+
+
 
