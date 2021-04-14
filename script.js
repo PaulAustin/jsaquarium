@@ -16,6 +16,8 @@ class JsExec {
         console.log('run')
         this.jsi = new Interpreter(sampleCode);
         this.jsi.run()
+
+        console.log("and the answer is ", this.jsi.value)
     }
     stop () {
         console.log('stop')
