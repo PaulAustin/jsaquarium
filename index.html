@@ -9,7 +9,19 @@
     <script src="./node_modules/codemirror/lib/codemirror.js"></script>
   </head>
   <body>
-    <textarea id="editor"></textarea>
+
+    <div style="width: 100%; display: table;">
+      <button>Run</button><button>Stop</button><button>Step</button>
+        <div class="container" style="display: flex; height: 100px;">
+          <div style="width: 50%; background: green;">
+            <textarea id="editor"></textarea>
+          </div>
+          <div style="flex-grow: 1; background: grey;"> 
+            <canvas id="my_canvas" style="height:100%"></canvas> 
+          </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 

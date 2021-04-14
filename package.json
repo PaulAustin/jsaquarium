@@ -9,6 +9,7 @@
   "author": "Paul Austin",
   "license": "MIT",
   "dependencies": {
-    "codemirror": "^5.60.0"
+    "codemirror": "^5.60.0",
+    "js-interpreter": "^2.3.0"
   }
 }
