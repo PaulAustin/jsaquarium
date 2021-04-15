@@ -8,7 +8,11 @@ let cmOptions = {
 }
 
 let sampleCode = `
-2 * 3
+var x = 2 * 3
+for (i = 0; i < 10; i++) {
+ x+=i
+}
+x
 `
 
 class JsExec {
