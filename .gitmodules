@@ -1,3 +1,6 @@
 [submodule "jsi"]
 	path = jsi
 	url = https://github.com/NeilFraser/JS-Interpreter.git
+[submodule "jsif"]
+	path = jsif
+	url = https://github.com/PaulAustin/JS-Interpreter.git
