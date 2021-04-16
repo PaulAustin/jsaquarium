@@ -8,17 +8,22 @@ let cmOptions = {
 }
 
 let sampleCode = `
-var x = 2 * 3
-for (i = 0; i < 10; i++) {
- x+=i
+let x = 2 * 3
+const y = pi
+for (let i = 0; i < 10; i++) {
+  x += i
 }
+yo(pi)
 x
 `
+
 
 class JsExec {
     run () {
         console.log('run')
-        this.jsi = new Interpreter(sampleCode);
+        let code = jse.code.getValue()
+        console.log('code is', code)
+        this.jsi = new Interpreter(code, jsiInit);
         this.jsi.run()
 
         console.log("and the answer is ", this.jsi.value)
@@ -42,7 +47,17 @@ function conectUI() {
     p.onclick = jse.step;       
 }
 
+function yo(message) {
+    console.log('Yo!', message)
+}
+
+function jsiInit(jsi, glob) {
+    jsi.setProperty(glob, 'pi', 3.14159);
+    jsi.setProperty(glob, 'yo', jsi.createNativeFunction(yo));
+}
+
 function spinUp() {
+
     var textArea = document.getElementById("editor");
     console.log("script has been loaded", textArea)
     jse.code = new CodeMirror.fromTextArea(textArea, cmOptions);
