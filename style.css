@@ -1,6 +1,7 @@
 html, body {
     margin: 0;
     height: 100%;
+    width: 100%;
 }
 
 .CodeMirror {
@@ -9,10 +10,14 @@ html, body {
 
 .gutter.gutter-horizontal {
     cursor: col-resize;
-    background-image: url('./split/packages/splitjs/grips/horizontal.png');
+    background-image: url('./modules/splitjs/grips/horizontal.png');
+    background-repeat: no-repeat;
+    background-position:center; 
 }
 
 .gutter.gutter-vertical {
     cursor: row-resize;
-    background-image: url('./split/packages/splitjs/grips/vertical.png');
+    background-image: url('./modules/splitjs/grips/vertical.png');
+    background-repeat: no-repeat;
+    background-position:center; 
 }

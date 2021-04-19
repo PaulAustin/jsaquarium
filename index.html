@@ -13,18 +13,22 @@
     <script src="jsif/interpreter.js"></script> 
   </head>
   <body>
-
-    <div style="height:100%; width:100%; display:table;">
+    <div style="height:100%; width:100%; ">
         <div class="container" style="display:flex; height:100%;">
-          <div id="code" style="height:100%; width: 50%; background: green;">
+          <div id="code" style="height:100%; background: rgb(0, 0, 0);">
             <button id="runButton">Run</button>
             <button id="stopButton">Stop</button>
             <button id="stepButton">Step</button>
             <button id="clearButton">Clear</button>
             <textarea id="editor" style="height:100%;"></textarea>
           </div>
-          <div id="drawing" style="flex-grow: 1; background: grey;"> 
-            <canvas id="my_canvas" style="height:100%"></canvas> 
+          <div id="drawing" style="flex-grow: 1; "> 
+            <div id="picture" style="height:50%; background:rgb(129, 212, 250);">
+              <canvas id="my_canvas" style="height:100%"></canvas>
+            </div>
+            <div id="stdout" style="flex-grow: 2; ">
+              <textarea id="console" style="height:100%; width:100%"></textarea>
+            </div>
           </div>
         </div>
     </div>
