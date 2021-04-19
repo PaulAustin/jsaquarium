@@ -6,29 +6,32 @@
     <title>JS-Aquarium</title>
     <link rel="stylesheet" href="./node_modules/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="./node_modules/codemirror/theme/material.css">
+    <link rel="stylesheet" href="./style.css">
     <script src="./node_modules/codemirror/lib/codemirror.js"></script>
-    <script src="./node_modules/codemirror/mode/javascript//javascript.js"></script>
+    <script src="./node_modules/codemirror/mode/javascript/javascript.js"></script>
     <script src="jsif/acorn.js"></script>
-    <script src="jsif/interpreter.js"></script>
+    <script src="jsif/interpreter.js"></script> 
   </head>
   <body>
 
-    <div style="width: 100%; display: table;">
-      <button id="runButton">Run</button>
-      <button id="stopButton">Stop</button>
-      <button id="stepButton">Step</button>
-      <button id="clearButton">Clear</button>
-        <div class="container" style="display: flex; height: 100px;">
-          <div style="width: 50%; background: green;">
-            <textarea id="editor"></textarea>
+    <div style="height:100%; width:100%; display:table;">
+        <div class="container" style="display:flex; height:100%;">
+          <div id="code" style="height:100%; width: 50%; background: green;">
+            <button id="runButton">Run</button>
+            <button id="stopButton">Stop</button>
+            <button id="stepButton">Step</button>
+            <button id="clearButton">Clear</button>
+            <textarea id="editor" style="height:100%;"></textarea>
           </div>
-          <div style="flex-grow: 1; background: grey;"> 
+          <div id="drawing" style="flex-grow: 1; background: grey;"> 
             <canvas id="my_canvas" style="height:100%"></canvas> 
           </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script src="./modules/splitjs/split.js" type="module"></script>
+    <script src="./main.js" type="module"></script>
   </body>
 </html>
 

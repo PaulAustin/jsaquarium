@@ -1,0 +1,18 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.CodeMirror {
+    height: 1000px;
+  }
+
+.gutter.gutter-horizontal {
+    cursor: col-resize;
+    background-image: url('./split/packages/splitjs/grips/horizontal.png');
+}
+
+.gutter.gutter-vertical {
+    cursor: row-resize;
+    background-image: url('./split/packages/splitjs/grips/vertical.png');
+}

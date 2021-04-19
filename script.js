@@ -39,6 +39,8 @@ class JsExec {
 const jse = new JsExec()
 
 function conectUI() {
+
+    // Set up buttons
     var p = document.getElementById("runButton");
     p.onclick = jse.run;       
     var p = document.getElementById("stopButton");
