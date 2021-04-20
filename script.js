@@ -34,6 +34,10 @@ class JsExec {
     step () {
         console.log('step')
     }
+    stdout (message) {
+       // var myTextArea = $('#myTextarea');
+       // myTextArea.val(myTextArea.val() + '\nYour appended stuff');
+    }
 }
 
 const jse = new JsExec()
@@ -65,6 +69,7 @@ function spinUp() {
     jse.code = new CodeMirror.fromTextArea(textArea, cmOptions);
     
     jse.code.setValue(sampleCode)
+    jse.stdout  = document.getElementById("stdout");
 }
 
 
