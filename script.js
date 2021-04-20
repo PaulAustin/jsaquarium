@@ -34,9 +34,13 @@ class JsExec {
     step () {
         console.log('step')
     }
+    clear () {
+        console.log('step')
+        jse.soText.value = "";
+    }
     stdout (message) {
-       // var myTextArea = $('#myTextarea');
-       // myTextArea.val(myTextArea.val() + '\nYour appended stuff');
+        console.log(message)
+        jse.soText.value = jse.soText.value + '\n' + message;
     }
 }
 
@@ -51,10 +55,12 @@ function conectUI() {
     p.onclick = jse.stop;       
     var p = document.getElementById("stepButton");
     p.onclick = jse.step;       
+    var p = document.getElementById("clearButton");
+    p.onclick = jse.clear;       
 }
 
 function yo(message) {
-    console.log('Yo!', message)
+    jse.stdout(message)
 }
 
 function jsiInit(jsi, glob) {
@@ -69,7 +75,7 @@ function spinUp() {
     jse.code = new CodeMirror.fromTextArea(textArea, cmOptions);
     
     jse.code.setValue(sampleCode)
-    jse.stdout  = document.getElementById("stdout");
+    jse.soText  = document.getElementById("console");
 }
 
 
