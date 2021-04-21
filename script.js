@@ -19,12 +19,17 @@ x
 
 
 class JsExec {
-    run () {
+    run () {          
         console.log('run')
         let code = jse.code.getValue()
         console.log('code is', code)
-        this.jsi = new Interpreter(code, jsiInit);
-        this.jsi.run()
+        try {
+            this.jsi = new Interpreter(code, jsiInit);
+            this.jsi.run()
+        } catch(err) {
+            jse.stdout("Error> ")
+            jse.stdout(err.message)
+        }
 
         console.log("and the answer is ", this.jsi.value)
     }
