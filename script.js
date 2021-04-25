@@ -13,7 +13,7 @@ const y = pi
 for (let i = 0; i < 10; i++) {
   x += i
 }
-yo(pi)
+yo('and the answer is', pi)
 x
 `
 
@@ -24,19 +24,19 @@ class JsExec {
         let code = jse.code.getValue()
         console.log('code is', code)
         try {
-            this.jsi = new Interpreter(code, jsiInit);
-            this.jsi.run()
+            jse.jsi = new Interpreter(code, jsiInit);
+           // jse.jsi.appendCode()
         } catch(err) {
             jse.stdout("Error> ")
             jse.stdout(err.message)
         }
-
-        console.log("and the answer is ", this.jsi.value)
+        takeStep()
     }
     stop () {
         console.log('stop')
     }
     step () {
+        // if not runing yet, then start up JSI
         console.log('step')
     }
     clear () {
@@ -46,6 +46,29 @@ class JsExec {
     stdout (message) {
         console.log(message)
         jse.soText.value = jse.soText.value + '\n' + message;
+    }
+}
+
+// Make this a method on JSE ???
+function takeStep() {
+    var moreToDo = false
+
+    try {
+        //console.log('taking a step')
+        for (let i = 0; i < 20; i++) {
+            moreToDo = jse.jsi.step()
+        }
+        // Need to see what node in the AST the code is at
+    } catch(err) {
+        jse.stdout("Error> ")
+        jse.stdout(err.message)
+    }
+
+    if (moreToDo) {
+        window.setTimeout(takeStep, 0);
+    } else {
+        console.log('>all done now')
+        console.log('>and the answer is ', jse.jsi.value)
     }
 }
 
@@ -64,8 +87,31 @@ function conectUI() {
     p.onclick = jse.clear;       
 }
 
-function yo(message) {
-    jse.stdout(message)
+function addBotMethods() {
+    var myCode = 'robot.forwards(robot.fast);';
+    var initFunc = function(interpreter, globalObject) {
+      // Create 'robot' global object.
+      var robot = interpreter.nativeToPseudo({});
+      interpreter.setProperty(globalObject, 'robot', robot);
+
+      // Define 'robot.fast' property.
+      interpreter.setProperty(robot, 'fast', 99);
+
+      // Define 'robot.forwards' function.
+      var wrapper = function forwards(speed) {
+        return realRobot.forwards(speed);
+      };
+      interpreter.setProperty(robot, 'forwards',
+          interpreter.createNativeFunction(wrapper));
+    };
+    var myInterpreter = new Interpreter(myCode, initFunc);
+}
+
+function yo(...args) {
+    var stringMessage = args.reduce(function (acc, cur) {
+        return String(acc) + ' ' + String(cur)
+    })
+    jse.stdout(stringMessage)
 }
 
 function jsiInit(jsi, glob) {
