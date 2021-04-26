@@ -17,6 +17,42 @@ yo('and the answer is', pi)
 x
 `
 
+// A simple turtle like canvas
+class StdCanvas {
+    constructor (ctx) {
+        this.ctx = ctx
+    }
+    // Style would be a bit like a CSS set of prooperties
+    stytle (style) {
+        this.style = style
+    }
+    box (x, y, w, h) {
+        console.log('darw box',x,y,w,h)
+        let ctx = this.ctx
+        ctx.beginPath();
+        ctx.rect(x, y, w, h);
+        ctx.fillStyle = "Cyan";
+        ctx.fill();
+        ctx.closePath();
+    }
+    circle (x, y, d) {
+        let ctx = this.ctx
+        ctx.beginPath();
+        ctx.arc(x, y, d / 2.0, 0, Math.PI*2);
+        ctx.fillStyle = "Pink";
+        ctx.fill();
+        ctx.closePath();
+    }
+    f (d) {
+
+    }
+    b (d) {
+
+    }
+    text () {
+
+    }
+}
 
 class JsExec {
     run () {          
@@ -47,6 +83,20 @@ class JsExec {
         console.log(message)
         jse.soText.value = jse.soText.value + '\n' + message;
     }
+    conectUI() {
+        // Set up buttons, OK this shoudle be data driven
+        document.getElementById("runButton").onclick = jse.run       
+        document.getElementById("stopButton").onclick = jse.stop    
+        document.getElementById("stepButton").onclick = jse.step
+        document.getElementById("clearButton").onclick = jse.clear
+        
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d") 
+        jse.stdDraw = new StdCanvas(ctx)   
+
+        jse.stdDraw.box(100, 100, 10, 10)
+        jse.stdDraw.circle(110, 110, 10, 10)
+    }
 }
 
 // Make this a method on JSE ???
@@ -73,19 +123,6 @@ function takeStep() {
 }
 
 const jse = new JsExec()
-
-function conectUI() {
-
-    // Set up buttons
-    var p = document.getElementById("runButton");
-    p.onclick = jse.run;       
-    var p = document.getElementById("stopButton");
-    p.onclick = jse.stop;       
-    var p = document.getElementById("stepButton");
-    p.onclick = jse.step;       
-    var p = document.getElementById("clearButton");
-    p.onclick = jse.clear;       
-}
 
 function addBotMethods() {
     var myCode = 'robot.forwards(robot.fast);';
@@ -127,12 +164,9 @@ function spinUp() {
     
     jse.code.setValue(sampleCode)
     jse.soText  = document.getElementById("console");
+    jse.conectUI()
+
 }
 
-
 spinUp()
-conectUI()
-
-
-
 
