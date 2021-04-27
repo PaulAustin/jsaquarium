@@ -87,15 +87,24 @@ class JsExec {
         console.log(stringMessage)
         jse.soText.value = jse.soText.value + '\n' + stringMessage;
     }
+
+    canvasResize () {
+        console.log("resize canvas to match div")
+        var drawDiv = document.getElementById("drawdiv")
+        jse.canvas.width  = drawDiv.innerWidth;
+        jse.canvas.height = drawDiv.innerHeight;
+    }
+
     conectUI() {
         // Set up buttons, OK this shoudle be data driven
         document.getElementById("runButton").onclick = jse.run       
         document.getElementById("stopButton").onclick = jse.stop    
         document.getElementById("stepButton").onclick = jse.step
         document.getElementById("clearButton").onclick = jse.clear
+        document.getElementById("drawdiv").addEventListener("resize", jse.canvasResize, false);
         
-        var canvas = document.getElementById("myCanvas");
-        var ctx = canvas.getContext("2d") 
+        jse.canvas = document.getElementById("canvas");
+        var ctx = jse.canvas.getContext("2d") 
         jse.stdDraw = new StdCanvas(ctx)   
 
         jse.stdDraw.circle(50, 50, 40, 40)
