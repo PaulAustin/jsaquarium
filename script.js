@@ -11,7 +11,7 @@ let sampleCode = `
 let x = 2 * 3
 const y = pi
 for (let i = 0; i < 10; i++) {
-  x += i
+  turtle.box(i * 10, i * 20, 40, 15)
 }
 yo('and the answer is', pi)
 x
@@ -27,7 +27,6 @@ class StdCanvas {
         this.style = style
     }
     box (x, y, w, h) {
-        console.log('darw box',x,y,w,h)
         let ctx = this.ctx
         ctx.beginPath();
         ctx.rect(x, y, w, h);
@@ -57,7 +56,7 @@ class StdCanvas {
 class JsExec {
     run () {          
         console.log('run')
-        let code = jse.code.getValue()
+        let code = jse.editor.getValue()
         console.log('code is', code)
         try {
             jse.jsi = new Interpreter(code, jsiInit);
@@ -79,9 +78,14 @@ class JsExec {
         console.log('step')
         jse.soText.value = "";
     }
-    stdout (message) {
-        console.log(message)
-        jse.soText.value = jse.soText.value + '\n' + message;
+    stdout (...args) {
+
+        var stringMessage = args.reduce(function (acc, cur) {
+            return String(acc) + ' ' + String(cur)
+        })
+    
+        console.log(stringMessage)
+        jse.soText.value = jse.soText.value + '\n' + stringMessage;
     }
     conectUI() {
         // Set up buttons, OK this shoudle be data driven
@@ -94,8 +98,8 @@ class JsExec {
         var ctx = canvas.getContext("2d") 
         jse.stdDraw = new StdCanvas(ctx)   
 
+        jse.stdDraw.circle(50, 50, 40, 40)
         jse.stdDraw.box(100, 100, 10, 10)
-        jse.stdDraw.circle(110, 110, 10, 10)
     }
 }
 
@@ -105,8 +109,10 @@ function takeStep() {
 
     try {
         //console.log('taking a step')
-        for (let i = 0; i < 20; i++) {
+        for (let i = 0; i < 100; i++) {
             moreToDo = jse.jsi.step()
+            if (!moreToDo)
+                break;
         }
         // Need to see what node in the AST the code is at
     } catch(err) {
@@ -124,8 +130,7 @@ function takeStep() {
 
 const jse = new JsExec()
 
-function addBotMethods() {
-    var myCode = 'robot.forwards(robot.fast);';
+function addDrawMethods() {
     var initFunc = function(interpreter, globalObject) {
       // Create 'robot' global object.
       var robot = interpreter.nativeToPseudo({});
@@ -145,25 +150,45 @@ function addBotMethods() {
 }
 
 function yo(...args) {
-    var stringMessage = args.reduce(function (acc, cur) {
-        return String(acc) + ' ' + String(cur)
-    })
-    jse.stdout(stringMessage)
+    jse.stdout(...args)
 }
 
-function jsiInit(jsi, glob) {
-    jsi.setProperty(glob, 'pi', 3.14159);
-    jsi.setProperty(glob, 'yo', jsi.createNativeFunction(yo));
+function jsiInit(jsi, gns) {
+    jsi.setProperty(gns, 'pi', 3.14159);
+    jsi.setProperty(gns, 'yo', jsi.createNativeFunction(yo));
+
+    jsi.setProperty(gns, 't1', jsi.createNativeFunction(test1));
+
+    // Make a empty object add it to the global name space
+    var turtle = jsi.nativeToPseudo({});
+    jsi.setProperty(gns, 'turtle', turtle);
+
+    // Define 'turtle.box' method.
+    jsi.setProperty(turtle, 'box',
+        jsi.createNativeFunction((x,y,w,h) => (jse.stdDraw.box(x,y,w,h) ))
+        );
+
+    jsi.setProperty(turtle, 'circle',
+        jsi.createNativeFunction((x,y,d) => (jse.stdDraw.circle(x,y,d) ))
+        );
+
+    jsi.setProperty(turtle, 't1',
+        jsi.createNativeFunction(test1)
+        );
+
+}
+
+function test1(x, y, w, h) {
+    jse.stdDraw.box(x, y, w, h)
 }
 
 function spinUp() {
-
     var textArea = document.getElementById("editor");
     console.log("script has been loaded", textArea)
-    jse.code = new CodeMirror.fromTextArea(textArea, cmOptions);
+    jse.editor = new CodeMirror.fromTextArea(textArea, cmOptions);
     
-    jse.code.setValue(sampleCode)
-    jse.soText  = document.getElementById("console");
+    jse.editor.setValue(sampleCode)
+    jse.soText = document.getElementById("console");
     jse.conectUI()
 
 }
