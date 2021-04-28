@@ -10,12 +10,28 @@ let cmOptions = {
 let sampleCode = `
 let x = 2 * 3
 const y = pi
+for (let i = 0; i < 80; i+= 0.1) {
+  
+  x = 200 + Math.sin(i) * 100
+  y = 100 + Math.cos(i) * 100
+  
+  turtle.box(x, y, 5, 5)
+}
+yo('and the answer is', Math.sin(pi))
+x`
+
+/*
+`
+let x = 2 * 3
+const y = pi
 for (let i = 0; i < 10; i++) {
   turtle.box(i * 10, i * 20, 40, 15)
 }
 yo('and the answer is', pi)
 x
 `
+*/
+
 
 // A simple turtle like canvas
 class StdCanvas {
@@ -118,7 +134,7 @@ function takeStep() {
 
     try {
         //console.log('taking a step')
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 200; i++) {
             moreToDo = jse.jsi.step()
             if (!moreToDo)
                 break;

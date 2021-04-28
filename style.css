@@ -15,9 +15,13 @@ setting the
 }
 */
 
+#drawdiv {
+    border: 1px solid blue;
+}
+
 .CodeMirror {
     height: 1000px;
-  }
+}
 
 .gutter.gutter-horizontal {
     cursor: col-resize;
