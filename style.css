@@ -3,11 +3,17 @@ html, body {
     height: 100%;
     width: 100%;
 }
-
-#myCanvas {
-    width:300px;
-    height:300px;
+/*
+The canvas object has both object W/H and style W/H
+this can be usd to scale the picture, Its bees seen for stretching
+and perhaps comrpession is also  possible. IT woudl be helpful for studendt to
+have a normalized 1000x1000 surface for starters, they shoudl not need to think in pixels 
+setting the
+#canvas {
+    width:100%;
+    height:100%;
 }
+*/
 
 .CodeMirror {
     height: 1000px;
